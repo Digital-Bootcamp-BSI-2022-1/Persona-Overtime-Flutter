@@ -40,6 +40,10 @@ dependencies:
   intl: ^0.17.0
   dio_logging_interceptor: ^1.0.1
   shared_preferences: ^2.0.15
+  image_picker: ^0.8.5+3
+  file_picker: ^5.2.0+1
+  flutter_cached_pdfview: ^0.4.1
+  flutter_pdfview: ^1.2.5
 
 dev_dependencies:
   flutter_test:

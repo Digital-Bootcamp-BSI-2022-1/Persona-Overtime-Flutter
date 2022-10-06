@@ -1,9 +1,6 @@
 import 'package:persona_test/app/di/app_module.dart';
 import 'package:persona_test/app/navigator.dart';
 import 'package:persona_test/app/presentation/pages/login/login_page.dart';
-import 'package:persona_test/app/presentation/pages/main/main_page.dart';
-import 'package:persona_test/app/presentation/pages/home/home_page.dart';
-import 'package:persona_test/app/presentation/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:persona_test/app/utils/constants.dart';
@@ -22,10 +19,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Persona',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: kPrimaryBlue
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, primaryColor: kPrimaryBlue),
       home: LoginPage(),
       onGenerateRoute: appNavigator.onGenerateRoutes,
     );
