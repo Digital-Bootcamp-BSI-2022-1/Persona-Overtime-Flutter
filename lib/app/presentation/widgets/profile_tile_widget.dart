@@ -19,8 +19,7 @@ class WidgetProfileTile extends StatelessWidget {
     return Container(
       width: deviceSize.width * 0.8,
       height: deviceSize.height * 0.07,
-      decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1.0, color: kPrimaryGrey))),
+      decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: kPrimaryGrey))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -37,17 +36,11 @@ class WidgetProfileTile extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryBlack),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kPrimaryBlack),
               ),
               Text(
                 subtitle,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryGrey),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kPrimaryGrey),
               ),
             ],
           )

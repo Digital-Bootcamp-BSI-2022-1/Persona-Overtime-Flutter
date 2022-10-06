@@ -1,5 +1,5 @@
+import 'package:injector/injector.dart';
 import 'package:persona_test/app/presentation/pages/profile/profile_controller.dart';
-import 'package:persona_test/app/presentation/pages/login/login_page.dart';
 import 'package:persona_test/app/presentation/widgets/profile_tile_widget.dart';
 import 'package:persona_test/app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,8 @@ class ProfilePage extends View {
   @override
   // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() {
-    return _ProfileViewState(ProfileController());
+    final profileController = Injector.appInstance.get<ProfileController>();
+    return _ProfileViewState(profileController);
   }
 }
 
@@ -54,10 +55,8 @@ class _ProfileViewState extends ViewState<ProfilePage, ProfileController> {
                                   textAlign: TextAlign.center,
                                   text: const TextSpan(
                                       text: "My Profile",
-                                      style: TextStyle(
-                                          color: kPrimaryWhite,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal)),
+                                      style:
+                                          TextStyle(color: kPrimaryWhite, fontSize: 18, fontWeight: FontWeight.normal)),
                                 ),
                                 SizedBox(width: deviceSize.width * 0.2),
                                 ControlledWidgetBuilder<ProfileController>(
@@ -65,20 +64,16 @@ class _ProfileViewState extends ViewState<ProfilePage, ProfileController> {
                                     return SizedBox(
                                       width: deviceSize.width * 0.1,
                                       child: PopupMenuButton(
-                                        icon: const Icon(Icons.settings,
-                                            color: kPrimaryWhite),
+                                        icon: const Icon(Icons.settings, color: kPrimaryWhite),
                                         itemBuilder: (BuildContext context) {
                                           return [
                                             PopupMenuItem(
                                               child: const Text(
                                                 "Logout",
-                                                style: TextStyle(
-                                                    color: kPrimaryRed),
+                                                style: TextStyle(color: kPrimaryRed),
                                               ),
                                               onTap: () async {
-                                                final prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
+                                                final prefs = await SharedPreferences.getInstance();
                                                 prefs.clear();
                                                 controller.navigateToLogin();
                                               },
@@ -93,46 +88,33 @@ class _ProfileViewState extends ViewState<ProfilePage, ProfileController> {
                             ),
                             Material(
                               elevation: 1,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30)),
+                              borderRadius: const BorderRadius.all(Radius.circular(30)),
                               child: Container(
                                 width: deviceSize.width * 0.9,
                                 height: deviceSize.height * 0.4,
                                 decoration: const BoxDecoration(
-                                    color: kPrimaryWhite,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
+                                    color: kPrimaryWhite, borderRadius: BorderRadius.all(Radius.circular(30))),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(height: deviceSize.height * 0.15),
                                     Text(controller.profileData['name'] ?? "",
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold)),
+                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                                     SizedBox(height: deviceSize.height * 0.03),
                                     Text(controller.profileData['nik'] ?? "",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
+                                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                                     Text(controller.profileData['role'] ?? "",
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold))
+                                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
                                   ],
                                 ),
                               ),
                             ),
                             SizedBox(height: deviceSize.height * 0.01),
                             WidgetProfileTile(
-                                title: "Grade",
-                                subtitle: controller.profileData['grade'] ?? "",
-                                icon: Icons.star),
+                                title: "Grade", subtitle: controller.profileData['grade'] ?? "", icon: Icons.star),
                             WidgetProfileTile(
                                 title: "Employment Status",
-                                subtitle: controller
-                                        .profileData['employment_status'] ??
-                                    "",
+                                subtitle: controller.profileData['employment_status'] ?? "",
                                 icon: Icons.people),
                             WidgetProfileTile(
                                 title: "Mobile Phone",
@@ -147,13 +129,10 @@ class _ProfileViewState extends ViewState<ProfilePage, ProfileController> {
                                 subtitle: controller.profileData['ktp'] ?? "",
                                 icon: Icons.contact_phone),
                             WidgetProfileTile(
-                                title: "NPWP",
-                                subtitle: controller.profileData['npwp'] ?? "",
-                                icon: Icons.credit_card),
+                                title: "NPWP", subtitle: controller.profileData['npwp'] ?? "", icon: Icons.credit_card),
                             WidgetProfileTile(
                                 title: "Join Date",
-                                subtitle:
-                                    controller.profileData['join_date'] ?? "",
+                                subtitle: controller.profileData['join_date'] ?? "",
                                 icon: Icons.calendar_month),
                             SizedBox(height: deviceSize.height * 0.05),
                           ],

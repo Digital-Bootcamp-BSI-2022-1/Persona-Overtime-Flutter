@@ -1,18 +1,41 @@
 import 'package:persona_test/app/presentation/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:persona_test/app/presentation/pages/profile/profile_presenter.dart';
+import 'package:persona_test/domain/entities/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ProfileController extends Controller {
+  final ProfilePresenter _presenter;
+
+  ProfileController(this._presenter);
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   Map<String, dynamic> _profileData = {};
   Map<String, dynamic> get profileData => _profileData;
 
+  Profile? _profile;
+  Profile? get users => _profile;
+
   @override
   void initListeners() {
+    _initObserver();
+    _getProfileCA();
     getProfile();
+  }
+
+  void _initObserver() {
+    _presenter.onErrorGetProfile = (e) {};
+    _presenter.onFinishGetProfile = () {
+      hideLoading();
+    };
+    _presenter.onSuccessGetProfile = (Profile? data) {
+      _profile = data;
+      // print(_profile);
+      // print("Success");
+    };
   }
 
   void navigateToLogin() {
@@ -26,21 +49,26 @@ class ProfileController extends Controller {
     final String? nikSP = prefs.getString('nik');
     if (nikSP == null) {
       final String? tokenGlobal = prefs.getString('token');
-      var responseGetProfile = await Dio().get(
-          'https://persona-overtime.herokuapp.com/profile',
-          options: Options(headers: {"Authorization": "Bearer $tokenGlobal"}));
-      prefs.setString('name', responseGetProfile.data['name']);
-      prefs.setString('nik', responseGetProfile.data['nik']);
-      prefs.setString('role', responseGetProfile.data['role']);
-      prefs.setString('grade', responseGetProfile.data['grade']);
-      prefs.setString(
-          'employment_status', responseGetProfile.data['employment_status']);
-      prefs.setString('phone', responseGetProfile.data['phone']);
-      prefs.setString('email', responseGetProfile.data['email']);
-      prefs.setString('ktp', responseGetProfile.data['ktp']);
-      prefs.setString('npwp', responseGetProfile.data['npwp']);
-      prefs.setString('join_date', responseGetProfile.data['join_date']);
-      _profileData = responseGetProfile.data;
+      try {
+        var responseGetProfile = await Dio().get('https://persona-overtime.herokuapp.com/profile',
+            options: Options(headers: {"Authorization": "Bearer $tokenGlobal"}));
+        prefs.setString('name', responseGetProfile.data['name']);
+        prefs.setString('nik', responseGetProfile.data['nik']);
+        prefs.setString('role', responseGetProfile.data['role']);
+        prefs.setString('grade', responseGetProfile.data['grade']);
+        prefs.setString('employment_status', responseGetProfile.data['employment_status']);
+        prefs.setString('phone', responseGetProfile.data['phone']);
+        prefs.setString('email', responseGetProfile.data['email']);
+        prefs.setString('ktp', responseGetProfile.data['ktp']);
+        prefs.setString('npwp', responseGetProfile.data['npwp']);
+        prefs.setString('join_date', responseGetProfile.data['join_date']);
+        _profileData = responseGetProfile.data;
+      } catch (e) {
+        // print(e);
+        if (e is DioError) {
+          // print(e.response?.data);
+        }
+      }
     }
     if (nikSP != null) {
       final String? nameSP = prefs.getString('name');
@@ -64,6 +92,15 @@ class ProfileController extends Controller {
       _profileData['join_date'] = joinDateSP;
     }
     hideLoading();
+  }
+
+  void _getProfileCA() async {
+    showLoading();
+    final prefs = await SharedPreferences.getInstance();
+    final String? tokenGlobal = prefs.getString('token');
+    // print(_profile);
+    _presenter.getProfile(tokenGlobal!);
+    // print(_profile);
   }
 
   void showLoading() {

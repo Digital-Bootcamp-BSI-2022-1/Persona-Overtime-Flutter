@@ -1,5 +1,4 @@
 import 'package:persona_test/app/presentation/pages/home/home_controller.dart';
-import 'package:persona_test/app/presentation/pages/login/login_page.dart';
 import 'package:persona_test/app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,16 +47,25 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                               width: deviceSize.width * 0.9,
                               child: RichText(
                                 text: TextSpan(
-                                  text: "Good Afternoon, ",
+                                  text: "Good ",
                                   style: const TextStyle(
-                                      color: kPrimaryWhite,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal),
+                                      color: kPrimaryWhite, fontSize: 18, fontWeight: FontWeight.normal),
                                   children: <TextSpan>[
+                                    if (TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour < 12)
+                                      const TextSpan(
+                                        text: "Morning, ",
+                                      ),
+                                    if (TimeOfDay.now().hour >= 12 && TimeOfDay.now().hour < 18)
+                                      const TextSpan(
+                                        text: "Afternoon, ",
+                                      ),
+                                    if (TimeOfDay.now().hour >= 18 && TimeOfDay.now().hour < 24)
+                                      const TextSpan(
+                                        text: "Night, ",
+                                      ),
                                     TextSpan(
                                         text: controller.userData ?? "",
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold))
+                                        style: const TextStyle(fontWeight: FontWeight.bold))
                                   ],
                                 ),
                               ),
@@ -65,21 +73,17 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                             SizedBox(height: deviceSize.height * 0.01),
                             Material(
                               elevation: 1,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30)),
+                              borderRadius: const BorderRadius.all(Radius.circular(30)),
                               child: Container(
                                 width: deviceSize.width * 0.9,
                                 height: deviceSize.height * 0.4,
                                 decoration: const BoxDecoration(
-                                    color: kPrimaryWhite,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
+                                    color: kPrimaryWhite, borderRadius: BorderRadius.all(Radius.circular(30))),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     StreamBuilder(
-                                        stream: Stream.periodic(
-                                            const Duration(milliseconds: 300)),
+                                        stream: Stream.periodic(const Duration(milliseconds: 300)),
                                         builder: (context, snapshot) {
                                           return Text(
                                             formatTime.format(DateTime.now()),
@@ -93,63 +97,45 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                                     Text(
                                       formatDate.format(DateTime.now()),
                                       style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: kPrimaryGrey),
+                                          fontSize: 14, fontWeight: FontWeight.bold, color: kPrimaryGrey),
                                     ),
                                     SizedBox(height: deviceSize.height * 0.01),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const Icon(
                                           Icons.location_on,
                                           color: kPrimaryBlue,
                                         ),
-                                        SizedBox(
-                                            width: deviceSize.width * 0.02),
+                                        SizedBox(width: deviceSize.width * 0.02),
                                         const Text(
                                           "Location",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
                                     SizedBox(height: deviceSize.height * 0.01),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: deviceSize.width * 0.35,
                                           height: deviceSize.height * 0.15,
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               const Text(
                                                 "Clock In",
-                                                style: TextStyle(
-                                                    color: kPrimaryPurple,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryPurple, fontWeight: FontWeight.bold),
                                               ),
                                               const Text(
                                                 "--:--:--",
-                                                style: TextStyle(
-                                                    color: kPrimaryBlack,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryBlack, fontWeight: FontWeight.bold),
                                               ),
-                                              SizedBox(
-                                                  height:
-                                                      deviceSize.height * 0.01),
+                                              SizedBox(height: deviceSize.height * 0.01),
                                               const Text(
                                                 "-",
-                                                style: TextStyle(
-                                                    color: kPrimaryGrey,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryGrey, fontWeight: FontWeight.bold),
                                               )
                                             ],
                                           ),
@@ -159,36 +145,24 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                                           height: deviceSize.height * 0.1,
                                           color: kPrimaryBlack,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           width: deviceSize.width * 0.35,
                                           height: deviceSize.height * 0.15,
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               const Text(
                                                 "Clock Out",
-                                                style: TextStyle(
-                                                    color: kPrimaryYellow,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryYellow, fontWeight: FontWeight.bold),
                                               ),
                                               const Text(
                                                 "--:--:--",
-                                                style: TextStyle(
-                                                    color: kPrimaryBlack,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryBlack, fontWeight: FontWeight.bold),
                                               ),
-                                              SizedBox(
-                                                  height:
-                                                      deviceSize.height * 0.01),
+                                              SizedBox(height: deviceSize.height * 0.01),
                                               const Text(
                                                 "-",
-                                                style: TextStyle(
-                                                    color: kPrimaryGrey,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: kPrimaryGrey, fontWeight: FontWeight.bold),
                                               )
                                             ],
                                           ),
@@ -201,15 +175,11 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                                       child: ElevatedButton(
                                         onPressed: () {},
                                         style: OutlinedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                             backgroundColor: kPrimaryBlue),
                                         child: const Text(
                                           "CLOCK IN",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: kPrimaryWhite),
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryWhite),
                                         ),
                                       ),
                                     )
@@ -221,68 +191,62 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Material(
-                                  elevation: 1,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  child: Container(
+                                TextButton(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(kPrimaryWhite),
+                                      elevation: MaterialStateProperty.all(1),
+                                      padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                      shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      ))),
+                                  child: SizedBox(
                                     width: deviceSize.width * 0.425,
                                     height: deviceSize.height * 0.13,
-                                    decoration: const BoxDecoration(
-                                        color: kPrimaryWhite,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           height: deviceSize.height * 0.07,
                                           decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/home_leave.png'))),
+                                              image:
+                                                  DecorationImage(image: AssetImage('assets/images/home_leave.png'))),
                                         ),
                                         const Text(
                                           "Leave",
                                           style: TextStyle(
-                                              color: kPrimaryBlack,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              color: kPrimaryBlack, fontWeight: FontWeight.bold, fontSize: 12),
                                         )
                                       ],
                                     ),
                                   ),
                                 ),
                                 SizedBox(width: deviceSize.width * 0.05),
-                                Material(
-                                  elevation: 1,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  child: Container(
+                                TextButton(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(kPrimaryWhite),
+                                      elevation: MaterialStateProperty.all(1),
+                                      padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                      shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      ))),
+                                  child: SizedBox(
                                     width: deviceSize.width * 0.425,
                                     height: deviceSize.height * 0.13,
-                                    decoration: const BoxDecoration(
-                                        color: kPrimaryWhite,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           height: deviceSize.height * 0.07,
                                           decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/home_payroll.png'))),
+                                              image:
+                                                  DecorationImage(image: AssetImage('assets/images/home_payroll.png'))),
                                         ),
                                         const Text(
                                           "Payroll",
                                           style: TextStyle(
-                                              color: kPrimaryBlack,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              color: kPrimaryBlack, fontWeight: FontWeight.bold, fontSize: 12),
                                         )
                                       ],
                                     ),
@@ -294,68 +258,62 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Material(
-                                  elevation: 1,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  child: Container(
+                                TextButton(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(kPrimaryWhite),
+                                      elevation: MaterialStateProperty.all(1),
+                                      padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                      shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      ))),
+                                  child: SizedBox(
                                     width: deviceSize.width * 0.425,
                                     height: deviceSize.height * 0.13,
-                                    decoration: const BoxDecoration(
-                                        color: kPrimaryWhite,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           height: deviceSize.height * 0.07,
                                           decoration: const BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/home_hospital.png'))),
+                                                  image: AssetImage('assets/images/home_hospital.png'))),
                                         ),
                                         const Text(
                                           "Hospital",
                                           style: TextStyle(
-                                              color: kPrimaryBlack,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              color: kPrimaryBlack, fontWeight: FontWeight.bold, fontSize: 12),
                                         )
                                       ],
                                     ),
                                   ),
                                 ),
                                 SizedBox(width: deviceSize.width * 0.05),
-                                Material(
-                                  elevation: 1,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  child: Container(
+                                TextButton(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(kPrimaryWhite),
+                                      elevation: MaterialStateProperty.all(1),
+                                      padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                      shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      ))),
+                                  child: SizedBox(
                                     width: deviceSize.width * 0.425,
                                     height: deviceSize.height * 0.13,
-                                    decoration: const BoxDecoration(
-                                        color: kPrimaryWhite,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           height: deviceSize.height * 0.07,
                                           decoration: const BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/home_assessment.png'))),
+                                                  image: AssetImage('assets/images/home_assessment.png'))),
                                         ),
                                         const Text(
                                           "Assessment",
                                           style: TextStyle(
-                                              color: kPrimaryBlack,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
+                                              color: kPrimaryBlack, fontWeight: FontWeight.bold, fontSize: 12),
                                         )
                                       ],
                                     ),
@@ -367,48 +325,43 @@ class _HomeViewState extends ViewState<HomePage, HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                GestureDetector(
-                                  onTap: () {
+                                TextButton(
+                                  onPressed: () {
                                     controller.navigateToOvertime();
                                   },
-                                  child: Material(
-                                    elevation: 1,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
-                                    child: Container(
-                                      width: deviceSize.width * 0.425,
-                                      height: deviceSize.height * 0.13,
-                                      decoration: const BoxDecoration(
-                                          color: kPrimaryWhite,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: deviceSize.height * 0.07,
-                                            child: const Icon(
-                                              Icons.more_time_outlined,
-                                              color: kPrimaryBlueGreen,
-                                              size: 40,
-                                            ),
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(kPrimaryWhite),
+                                      elevation: MaterialStateProperty.all(1),
+                                      padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                                      shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      ))),
+                                  child: SizedBox(
+                                    width: deviceSize.width * 0.425,
+                                    height: deviceSize.height * 0.13,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: deviceSize.height * 0.07,
+                                          child: const Icon(
+                                            Icons.more_time_outlined,
+                                            color: kPrimaryBlueGreen,
+                                            size: 40,
                                           ),
-                                          const Text(
-                                            "Overtime",
-                                            style: TextStyle(
-                                                color: kPrimaryBlack,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                        const Text(
+                                          "Overtime",
+                                          style: TextStyle(
+                                              color: kPrimaryBlack, fontWeight: FontWeight.bold, fontSize: 12),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(height: deviceSize.height * 0.05),
+                            SizedBox(height: deviceSize.height * 0.02),
                           ],
                         ),
                       ),

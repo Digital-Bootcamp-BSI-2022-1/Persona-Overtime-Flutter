@@ -10,8 +10,6 @@ class WidgetTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextField(
-    decoration: InputDecoration(
-      hintText: hintText
-    ),
-  );
+        decoration: InputDecoration(hintText: hintText),
+      );
 }
