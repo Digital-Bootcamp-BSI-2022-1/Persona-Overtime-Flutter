@@ -336,7 +336,7 @@ class _OvertimeDetailViewState extends ViewState<OvertimeDetailPage, OvertimeDet
                                 ControlledWidgetBuilder<OvertimeDetailController>(builder: (context, controller) {
                                   if (controller.attachmentURL == null) {
                                     if (controller.attachment == null) {
-                                      if (controller.status == "2") {
+                                      if (controller.status == "2" || controller.status == "5") {
                                         return SizedBox(
                                             width: deviceSize.width * 0.9,
                                             height: deviceSize.height * 0.07,
